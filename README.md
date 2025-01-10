@@ -128,11 +128,11 @@ The validation is performed through the `validation_client` and `validation_serv
     * The `port` parameter must be an integer number between 1 and 65535.
 
 The `validation_client` function has also a logic to check for the input file.
-* Input file validation
+* Input file validation<br>
 The `input_file` must have a .txt or a .fasta extension. It must contain a header starting with `>`, and a DNA sequence with [valid DNA bases](https://www.bioinformatics.org/sms/iupac.html) (`C`, `G`, `T`, `A`, `R`, `Y`, `S`, `W`, `K`, `M`, `B`, `D`, `H`, `V`, `N`, `$`), either uppercase or lowercase, and must be non-empty. The program automatically converts all bases to uppercase and then removes the newline characters in the sequence (normally present in fasta files). The inclusion of all the DNA bases is thought to represent the biological complexity, allowing the use of the program in scenarios where the sequences contain ambiguity. However, it is the users' responsibility to correctly interpret the results in presence of these ambiguities. If the operation to perform is `"BWT"`, the sequence must not have the `$` terminator character. If the operation to perform is `"REVERT"` instead, the sequence must also contain the terminator character `$`, which is required for the reverse transformation and must be present only once.
 
 The `validation_server` has also a logic to check for the number of processes provided.
-* Number of processes validation
+* Number of processes validation<br>
 The `n_processes` must be a number between 1 and twice the number of CPU cores (included). This approach is needed to avoid performance degradation due to increased memory and resources consumption, and reduced efficiency.
 
 Errors during validation are managed using log files for debugging (`client_activity.log` and `server_activity.log`) and specific exit codes (see the `Error codes` section below).
