@@ -142,7 +142,7 @@ To guarantee the robustness of the system, a series of tests was implemented usi
 ```bash
 PYTHONPATH=$(pwd) python -m unittest discover -s tests -t .
 ```
-1. test_validation_functions
+1. test_validation_functions<br>
 These tests focus on validating the correctness of the inputs provided and simulate scenarios with possible input errors, verifying the resulting exit code. These tests verify:<br> 
     * valid inputs for client
     * invalid port
@@ -156,7 +156,7 @@ These tests focus on validating the correctness of the inputs provided and simul
     * invalid number of processes 
 The simulated errors will be recorded in the log files, as if they occurred during normal operation.
 
-2. test_conversion_functions
+2. test_conversion_functions<br>
 These test focus on ensuring the accuracy of the `burrows_wheeler_conversion` and `revert_burrows_wheeler` functions.
 
 ### Error codes
