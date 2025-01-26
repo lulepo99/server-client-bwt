@@ -94,7 +94,7 @@ The `burrows_wheeler_conversion` function converts a DNA sequence into its Burro
     bwt = ANNB$AA
     ```
 
-2. revert_burrows_wheeler
+2. revert_burrows_wheeler<br>
 The `revert_burrows_wheeler` function reverses the BWT encoded string into the original DNA sequence. This reversion is performed relying on the `LF Mapping` (Last to First mapping), a property of the BWT. The LF Mapping is implemented through the `map_last_to_first` function. The function first takes the BWT string (Last Column) and sorts it lexicographically (First Column). After that, it determines the rank of each character in the last column, where the `rank` represents the number of times a character is met in the last column up to a specific position. By summing the rank of a character determined from the last column with the index of its first occurrence in the First Column, the function calculates the corresponding position of the character in the first column. This is possible due to the LF mapping property: the rank of a specific character is the same in both the last and first columns<sup>[1](#ref-1)</sup>. The function then returns the final array with the indices representing this mapping. Once the mapping is performed, the revert_burrows_wheeler function iterates through the BWT array, starting from the position of the `$` terminator character, and uses the resulting indices to retrieve the characters in reverse order. Finally, the characters are joined to form the original DNA sequence, with the terminator character removed. This approach requires `O(n) memory` and has a `O(n logn) computational complexity`.
 <br> Consider the string `"ANNB$AA"`, which is the BWT of the string `"BANANA$"`. The First Column is obtained through a lexicographically sorting.
 
