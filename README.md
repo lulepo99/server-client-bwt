@@ -31,18 +31,18 @@ The `host` and `port` arguments are optional. If not specified, defaults are `lo
 
 ### server.py 
 The `server.py` file handles client connections and processes requests from users. It performs the following tasks:
-1. Socket creation and binding
+1. Socket creation and binding<br>
 Once the host, port, and n_processes arguments are validated (see the `Validation` section), it creates the socket and binds it to the address (host and port). If no errors occur, the server starts listening for incoming connections.
-2. Multiprocessing
+2. Multiprocessing<br>
 Uses the `multiprocessing` module to efficiently handle multiple client connections simultaneously. The default number of processes is set to the number of CPU cores minus one. Creating a pool of processes with this default allows the server to optimize resource allocation and ensure efficient task execution without overloading the system. This is particular important in this context, where the operations performed by the server are mainly CPU-bound. However, advanced users can specify a number of processes between 1 and twice the number of CPU cores to guarantee flexibility.
 3. Handling Client requests<br> 
     * Accepts incoming connections.
     * Receives data from the client, including the operation to perform (BWT or REVERT) and the DNA sequence.
     * Processes the request using the functions provided in the `conversion_functions.py` file, depending on the operation, and generates the result.
     * Sends the result back to the client.
-4. Error handling and Logging
+4. Error handling and Logging<br>
 Handles various types of errors, including validation errors and socket-related errors, using logging and exit codes. All server activities and errors are recorded in the `server_activity.log` file for debugging.
-5. Connection Closure
+5. Connection Closure<br>
 Ensure that client connections are closed, wether the request is succesfully completed or results in an error. 
 
 ### client.py 
@@ -59,7 +59,7 @@ For further information, see the `Validation` section under `Additional Informat
 3. Generating the output file<br>
     * Creates an output file named based on the input file, the operation performed, date, and time.
     * Writes the sequence header, the operation performed, and the output sequence into the file.
-4. Error handling and Logging
+4. Error handling and Logging<br>
 Handles various types of errors, including validation errors, socket-related errors, and writing errors (output file), using logging and exit codes. All client activities and errors are recorded in the `client_activity.log` file for debugging.
 
 ### conversion_functions.py 
@@ -94,7 +94,7 @@ The `burrows_wheeler_conversion` function converts a DNA sequence into its Burro
     bwt = ANNB$AA
     ```
 
-2. revert_burrows_wheeler<br>
+2. revert_burrows_wheeler
 The `revert_burrows_wheeler` function reverses the BWT encoded string into the original DNA sequence. This reversion is performed relying on the `LF Mapping` (Last to First mapping), a property of the BWT. The LF Mapping is implemented through the `map_last_to_first` function. The function first takes the BWT string (Last Column) and sorts it lexicographically (First Column). After that, it determines the rank of each character in the last column, where the `rank` represents the number of times a character is met in the last column up to a specific position. By summing the rank of a character determined from the last column with the index of its first occurrence in the First Column, the function calculates the corresponding position of the character in the first column. This is possible due to the LF mapping property: the rank of a specific character is the same in both the last and first columns<sup>[1](#ref-1)</sup>. The function then returns the final array with the indices representing this mapping. Once the mapping is performed, the revert_burrows_wheeler function iterates through the BWT array, starting from the position of the `$` terminator character, and uses the resulting indices to retrieve the characters in reverse order. Finally, the characters are joined to form the original DNA sequence, with the terminator character removed. This approach requires `O(n) memory` and has a `O(n logn) computational complexity`.
 <br> Consider the string `"ANNB$AA"`, which is the BWT of the string `"BANANA$"`. The First Column is obtained through a lexicographically sorting.
 
